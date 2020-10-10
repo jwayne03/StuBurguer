@@ -1,9 +1,12 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import Enum.DishType;
 
 /**
+ *
  * @author John Wayne Carreon
  */
 
@@ -12,21 +15,17 @@ public class Dish {
     private String name;
     private DishType type;
     private Double price;
-    private ArrayList<Feedback>feedbacks;
-
+    private ArrayList<Feedback> feedback;
 
     public Dish(String name, DishType type, Double price) {
         this.name = name;
         this.type = type;
         this.price = price;
-        this.feedbacks = new ArrayList<>();
+        this.feedback = new ArrayList<>();
     }
 
-    public ArrayList<Feedback> getFeedBack() {
-        return feedbacks;
-    }
-    public Dish() {
-
+    public ArrayList<Feedback> getFeedback() {
+        return feedback;
     }
 
     public String getName() {
@@ -45,13 +44,29 @@ public class Dish {
         this.price = price;
     }
 
+    public DishType getType() {
+        return type;
+    }
+
+    public void setType(DishType type) {
+        this.type = type;
+    }
+
+    public double getAverageFeedback() {
+        if (!this.feedback.isEmpty()) {
+            double total = 0;
+            for (Feedback feedback : this.feedback) {
+                total += feedback.getGrade();
+            }
+            return total / this.feedback.size();
+        } else {
+            return 0;
+        }
+    }
+
+
     @Override
     public String toString() {
-        return "Dish{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                ", price=" + price +
-                ", feedbacks=" + feedbacks +
-                '}';
+        return getName() + "," + getType().toString() + "," + getPrice();
     }
 }

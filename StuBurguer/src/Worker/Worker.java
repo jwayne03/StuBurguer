@@ -4,10 +4,14 @@ import Model.Dish;
 import Enum.DishType;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+/**
+ *
+ * @author John Wayne Carreon
+ */
 
 public class Worker {
 
@@ -31,6 +35,38 @@ public class Worker {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } while (answer.equals(""));
+        return answer;
+    }
+
+    public static String askStringToLowerCase(String message) {
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        String answer = "";
+        do {
+            try {
+                System.out.println(message);
+                answer = read.readLine().toLowerCase();
+                if (answer.equals("")) System.out.println("You must write something");
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } while (answer.equals(""));
+        return answer;
+    }
+
+    public static String askStringToUpperCase(String message) {
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        String answer = "";
+        do {
+            try {
+                System.out.println(message);
+                answer = read.readLine().toUpperCase();
+                if (answer.equals("")) System.out.println("You must write something");
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } while (answer.equals(""));
         return answer;
     }

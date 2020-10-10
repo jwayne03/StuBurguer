@@ -8,6 +8,7 @@ import Enum.DishType;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileManagement {
 
@@ -26,27 +27,21 @@ public class FileManagement {
 
     public static void getDefaultInfo(ArrayList<Dish> dishes) {
         readFileDish(dishes);
-        //readFileFeedback(dishes);
-    }
-
-    private static void readFileDish(ArrayList<Dish> dishes) {
+        readFileFeedback(dishes);
     }
 
 
-    public static void readFileDish(ArrayList<Dish> dishes, String namePlate) {
+    public static void readFileDish(ArrayList<Dish> dishes) {
         File file = new File(route() + FILE_DISHES + ".txt");
         if (file.exists()) {
             try {
                 BufferedReader read = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = read.readLine()) != null) {
-                    String[] data = line.split(";");
-
-                    if (line.isEmpty()) break;
-                    System.out.println(line);
-                    if (line.split(": ")[1].split("; ")[0].equals(namePlate)) {
-                        System.out.println("You can't create another plate, this plate already exists. Try again.");
-                    }
+                    String[] data = line.split(", ");
+                    System.out.println(Arrays.toString(data));
+                    Dish dish = new Dish(data[0], DishType.valueOf(data[1]), Double.parseDouble(data[2]));
+                    dishes.add(dish);
 
                 }
             } catch (IOException e) {
@@ -57,7 +52,7 @@ public class FileManagement {
         }
     }
 
-    /*public static void readFileFeedback(ArrayList<Dish> dishes) {
+    public static void readFileFeedback(ArrayList<Dish> dishes) {
         File file = new File(route() + FILE_FEEDBACK + ".txt");
         if (file.exists()) {
             try {
@@ -66,8 +61,8 @@ public class FileManagement {
                 while ((line = read.readLine()) != null) {
                     String[] data = line.split(";");
                     Dish dish = Worker.getDishByName(dishes, data[0]);
-                    Feedback feedback = new Feedback(Double.parseDouble(data[0]), data[1]);
-                    dish.getFeedBack().add(feedback);
+                    Feedback feedback = new Feedback(data[1], Double.parseDouble(data[2]), data[3]);
+                    dish.getFeedback().add(feedback);
                 }
                 read.close();
             } catch (IOException e) {
@@ -76,38 +71,46 @@ public class FileManagement {
         } else {
             System.out.println("The file doesn't exist");
         }
-    }*/
+    }
 
-    public static void saveData(ArrayList<Dish> dishes, String nameDish) {
+    public static void saveData(ArrayList<Dish> dish, String name) {
         File fileDish = new File(route() + FILE_DISHES + ".txt");
         File fileFeedback = new File(route() + FILE_FEEDBACK + ".txt");
-
-
         try {
-            FileWriter fwDish = new FileWriter(fileDish);
-            FileWriter fwFeedBack = new FileWriter(fileFeedback);
+            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish, true));
+            BufferedWriter bwFeedback = new BufferedWriter(new FileWriter(fileFeedback, true));
+            PrintWriter printWriter = new PrintWriter(fileDish);
             FileReader frDish = new FileReader(fileDish);
-            FileReader frFeedback = new FileReader(fileFeedback);
             BufferedReader br = new BufferedReader(frDish);
-            PrintWriter printWriter = new PrintWriter(fwDish);
 
-
+            String line;
             if (fileDish.exists()) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    if (line.isEmpty()) break;
+                // TODO: Do the part if the name of the dish exists don't append it.
+                //while ((line = br.readLine()) != null) {
+                //    if (line.isEmpty()) break;
+                //    if (line.split(":")[1].split("; ")[0].equals(name)) {
+                //        System.out.println("You can't create another plate, this plate already exists. Try again.");
+                //        break;
+                //    }
+                //}
 
-                    printWriter.println(dishes);
-                    //TODO: BORRAR CHIVATO
-                    System.out.println(dishes.toString());
-
-                    if (line.split(": ")[1].split("; ")[0].equals(nameDish)) {
-                        System.out.println("You can't create another plate, this plate already exists. Try again.");
+                for (Dish d : dish) {
+                    bwDish.write(d.toString());
+                    bwDish.newLine();
+                    if (!d.getFeedback().isEmpty()) {
+                        for (Feedback f : d.getFeedback()) {
+                            printWriter.println(d.getName() + "," + f.toString());
+                            bwDish.newLine();
+                        }
                     }
                 }
             }
+            bwDish.close();
+            bwFeedback.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }

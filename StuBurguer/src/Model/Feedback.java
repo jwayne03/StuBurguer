@@ -3,19 +3,27 @@ package Model;
 import java.util.ArrayList;
 
 /**
+ *
  * @author John Wayne Carreon
  */
 
 public class Feedback {
-
-    private double punctuation;
+    private String name;
+    private double grade;
     private String comment;
 
-    public Feedback(double punctuation, String comment) {
-        this.punctuation = punctuation;
+    public Feedback(String name, double grade, String comment) {
+        this.grade = grade;
         this.comment = comment;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Feedback(Feedback feedback) {
     }
@@ -24,12 +32,12 @@ public class Feedback {
 
     }
 
-    public double getPunctuation() {
-        return punctuation;
+    public double getGrade() {
+        return grade;
     }
 
     public void setPunctuation(double punctuation) {
-        this.punctuation = punctuation;
+        this.grade = punctuation;
     }
 
     public String getComment() {
@@ -40,4 +48,10 @@ public class Feedback {
         this.comment = comment;
     }
 
+    @Override
+    public String toString() {
+        return "Feedback: " +
+                " Punctuation: " + grade +
+                " Comment: " + comment;
+    }
 }

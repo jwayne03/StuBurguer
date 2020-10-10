@@ -31,6 +31,7 @@ public class Stuburguer {
     private Dish dish;
     private Feedback feedback;
     private ArrayList<Dish> dishes;
+    private ArrayList<Feedback> feedbacks;
 
     public void run() {
         read = new BufferedReader(new InputStreamReader(System.in));
@@ -44,12 +45,14 @@ public class Stuburguer {
 
     private void mainMenu() {
         try {
-
             boolean exit = false;
-
             while (!exit) {
                 showMenu();
-                int option = Integer.parseInt(read.readLine());
+                int option;
+                do {
+                    option = Integer.parseInt(read.readLine());
+                } while (option < 0 && option > 8);
+
 
                 switch (option) {
                     case 1:
@@ -70,116 +73,85 @@ public class Stuburguer {
                     case 6:
                         showAllData();
                         break;
+                    case 7:
+                        System.out.println("You chosed exit, Goodbye!");
+                        exit = true;
                     default:
                         System.out.println("You need to choose an option");
                         break;
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
         }
     }
 
     private void init() {
         dishes = new ArrayList<>();
+        feedbacks = new ArrayList<>();
         FileManagement.getDefaultInfo(dishes);
     }
 
     private void registerPlate() {
-
-           /* fileWriter = new FileWriter("plate.txt", true);
-            printWriter = new PrintWriter(fileWriter);
-            fileReader = new FileReader(file);
-            br = new BufferedReader(fileReader);
-            boolean exit = false;*/
-
-            System.out.println("Create dish:");
-            String name = Worker.askString("Name of the plate: ");
-            DishType type = Worker.askEnumDishType("TYPE (STARTER(1), MAIN(2), DESSERT(3))");
-            Double price = Worker.askDouble("Price of the plate: ");
-            Dish dish = new Dish(name,type,price);
-            dishes.add(dish);
-            FileManagement.saveData(dishes,name);
-            /*System.out.println("- Register a plate");
-            System.out.println("Introduce the name of the plate");
-            String namePlate = read.readLine();
-
-            if (file.exists()) {
-                String line;
-
-                while ((line = br.readLine()) != null) {
-                    if (line.isEmpty()) break;
-
-                    System.out.println(line);
-
-                    if (line.split(": ")[1].split("; ")[0].equals(namePlate)) {
-                        System.out.println("You can't create another plate, this plate already exists. Try again.");
-                    }
-                }
-            } else {
-                System.out.println("The file doesn't exist");
-            }
-
-            System.out.println("Introduce the price of the plate");
-            double price = Double.parseDouble(read.readLine());
-
-            System.out.println("Introduce the type:\n"
-                    + "1 - Starter\n"
-                    + "2 - Principal\n"
-                    + "3 - Dessert\n");
-
-            int typeOfPlate = Integer.parseInt(read.readLine());
-
-            switch (typeOfPlate) {
-                case 1:
-                    String starter = "Starter";
-                    printWriter.println("Name: " + namePlate + "; Type of Plate: " + starter + "; Price: " + price);
-                    break;
-                case 2:
-                    String principal = "Principal";
-                    printWriter.println("Name: " + namePlate + "; Type of Plate: " + principal + "; Price: " + price);
-                    break;
-                case 3:
-                    String dessert = "Dessert";
-                    printWriter.println("Name: " + namePlate + "; Type of Plate: " + dessert + "; Price: " + price);
-                    break;
-                default:
-                    System.out.println("You need to introduce a Number option. Try Again.");
-                    break;
-            }
-
-            feedback.valoration();*/
-
-
+        System.out.println("CREATING DISH......");
+        String name = Worker.askStringToUpperCase("NAME: ");
+        DishType type = Worker.askEnumDishType("TYPE (STARTER(1), MAIN(2), DESSERT(3)): ");
+        Double price = Worker.askDouble("PRICE: ");
+        Dish d = new Dish(name, type, price);
+        dishes.add(d);
+        FileManagement.saveData(dishes, name);
+        System.out.println("DISH CREATED!!");
     }
 
     private void feedBack() {
-        try {
-            fileWriter = new FileWriter("valoration.txt",true);
-            printWriter = new PrintWriter(fileWriter);
-
-            System.out.println("Punctuation of the plate:");
-            double punctuation = Double.parseDouble(read.readLine());
-
-            System.out.println("Comment the plate, it was good?");
-            String comment = read.readLine();
-
-            printWriter.println("Punctuation: " + punctuation + " Comment: " + comment);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileWriter != null) {
-                    fileWriter.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        showDishes();
+        String option = Worker.askString("DO YOU WANT TO YOUR FEEDBACK TO BE ANONYMOUS? (Y/N)", "Y", "N");
+        String name = "ANONYMOUS";
+        if (option.equalsIgnoreCase("N")) {
+            name = Worker.askString("NAME: ");
         }
+        double grade = Worker.askDouble("GRADE: ", 0, 10);
+        String comment = Worker.askString("Comment the plate, it was good?");
+
+        //try {
+        //    fileWriter = new FileWriter("valoration.txt", true);
+        //    printWriter = new PrintWriter(fileWriter);
+//
+        //    System.out.println("Punctuation of the plate:");
+        //    double punctuation = Double.parseDouble(read.readLine());
+//
+        //    System.out.println("Comment the plate, it was good?");
+        //    String comment = read.readLine();
+//
+        //    printWriter.println("Punctuation: " + punctuation + " Comment: " + comment);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //} finally {
+        //    try {
+        //        if (fileWriter != null) {
+        //            fileWriter.close();
+        //        }
+        //    } catch (IOException e) {
+        //        e.printStackTrace();
+        //    }
+        //}
     }
 
     private void consultPlates() {
+        System.out.println("SHOWING DISHES......");
+        for (int i = 0; i < dishes.size(); i++) {
+            System.out.println((i + 1)
+                    + ". " + dishes.get(i).toString() +
+                    " --> " + dishes.get(i).getAverageFeedback() +
+                    "(" + dishes.get(i).getFeedback().size() + ")");
+        }
+    }
 
+    private void showDishes() {
+        System.out.println("SHOWING DISHES......");
+        for (int i = 0; i < dishes.size(); i++) {
+            System.out.println((i + 1) + ". " + dishes.get(i).toString() + " --> " + dishes.get(i).getAverageFeedback() + "(" + dishes.get(i).getFeedback().size() + ")");
+        }
     }
 
     private void deletePlate() {
@@ -191,7 +163,14 @@ public class Stuburguer {
     }
 
     private void showAllData() {
-
+        System.out.println("SHOWING ALL DATA......");
+        for (int i = 0; i < dishes.size(); i++) {
+            System.out.println(dishes.toString());
+            System.out.println((i + 1) + ". " + dishes.get(i).toString());
+            for (Feedback feedback : dishes.get(i).getFeedback()) {
+                System.out.println("\t" + feedback.toString());
+            }
+        }
     }
 
     private void showMenu() {
@@ -202,7 +181,8 @@ public class Stuburguer {
                 + "3 - Consult the list of plates\n"
                 + "4 - Delete a plate\n"
                 + "5 - Modify the plate\n"
-                + "6 - Show all data\n");
+                + "6 - Show all data\n"
+                + "7 - Exit\n");
     }
 
 }
