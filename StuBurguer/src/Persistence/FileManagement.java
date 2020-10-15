@@ -39,10 +39,10 @@ public class FileManagement {
                 while ((line = read.readLine()) != null) {
                     if (line.isEmpty()) break;
                     String[] data = line.split(",");
-                    System.out.println(Arrays.toString(data));
                     Dish dish = new Dish(data[0], DishType.valueOf(data[1]), Double.parseDouble(data[2]));
                     dishes.add(dish);
                 }
+                read.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -147,6 +147,5 @@ public class FileManagement {
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -105,7 +105,6 @@ public class Stuburguer {
     }
 
     private void feedBack() throws IOException, NumberFormatException {
-//        showDishes();
         int count = 1;
 
         for (Dish dish : dishes) {
@@ -118,7 +117,6 @@ public class Stuburguer {
 
         dishes.get(option - 1).getName();
 
-        // añadir feedback y escojer plato hacerlo con el array y sus posiciones
         double grade = Worker.askDouble("GRADE: ", 0, 10);
         String comment = Worker.askString("Comment the plate, it was good?");
         Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
@@ -132,20 +130,20 @@ public class Stuburguer {
         for (int i = 0; i < dishes.size(); i++) {
             System.out.println((i + 1)
                     + ". " + dishes.get(i).toString() +
-                    " --> " + dishes.get(i).getAverageFeedback() +
+                    " --> " + dishes.get(i).getAverageFeedback(dishes.get(i).getName()) +
                     "(" + dishes.get(i).getFeedback().size() + ")");
         }
     }
 
-    private void showDishes() {
-        System.out.println("SHOWING DISHES......");
-        for (int i = 0; i < dishes.size(); i++) {
-            System.out.println((i + 1) + ". " +
-                    dishes.get(i).toString() + " --> " +
-                    dishes.get(i).getAverageFeedback() + "(" +
-                    dishes.get(i).getFeedback().size() + ")");
-        }
-    }
+//    private void showDishes() {
+//        System.out.println("SHOWING DISHES......");
+//        for (int i = 0; i < dishes.size(); i++) {
+//            System.out.println((i + 1) + ". " +
+//                    dishes.get(i).toString() + " --> " +
+//                    dishes.get(i).getAverageFeedback() + "(" +
+//                    dishes.get(i).getFeedback().size() + ")");
+//        }
+//    }
 
     private void deletePlate() {
 

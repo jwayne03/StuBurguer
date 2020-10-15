@@ -50,13 +50,18 @@ public class Dish {
         this.type = type;
     }
 
-    public double getAverageFeedback() {
+    public double getAverageFeedback(String nombre) {
         if (!this.feedback.isEmpty()) {
             double total = 0;
+            int count=0;
             for (Feedback feedback : this.feedback) {
-                total += feedback.getGrade();
+                if (nombre.equalsIgnoreCase(feedback.getName())) {
+                    total += feedback.getGrade();
+                    count++;
+                }
+
             }
-            return total / this.feedback.size();
+            return total / count;
         } else {
             return 0;
         }
