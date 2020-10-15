@@ -4,3 +4,5 @@ PATATAS,10.0,no
 PATATAS,10.0,no
 PATATAS,10.0,no
 PASTA,9.0,bv
+PIZZA,3.0,no
+A,6.0,n
