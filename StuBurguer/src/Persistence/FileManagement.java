@@ -78,11 +78,7 @@ public class FileManagement {
 
         try {
             BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish, true));
-            PrintWriter printWriter = new PrintWriter(fileDish);
-            FileReader frDish = new FileReader(fileDish);
-            BufferedReader br = new BufferedReader(frDish);
 
-            String line;
             if (fileDish.exists()) {
                 for (Dish d : dish) {
                     bwDish.write(d.toString());
@@ -101,7 +97,6 @@ public class FileManagement {
         try {
             BufferedWriter bwFeedback = new BufferedWriter(new FileWriter(fileFeedback, true));
 
-            String line;
             if (fileFeedback.exists()) {
                 bwFeedback.write(feedbacks.get(feedbacks.size() - 1).toString());
                 bwFeedback.newLine();

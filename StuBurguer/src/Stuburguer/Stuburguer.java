@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author John Wayne Carreon
@@ -54,7 +53,6 @@ public class Stuburguer {
                     option = Integer.parseInt(read.readLine());
                 } while (option < 0 && option > 8);
 
-
                 switch (option) {
                     case 1:
                         registerPlate();
@@ -64,7 +62,6 @@ public class Stuburguer {
                         break;
                     case 3:
                         consultPlates();
-//                        System.out.println(Dish.getAverageFeedback("BURGER"));
                         break;
                     case 4:
                         deletePlate();
@@ -133,15 +130,6 @@ public class Stuburguer {
         }
     }
 
-//    private void showDishes() {
-//        System.out.println("SHOWING DISHES......");
-//        for (int i = 0; i < dishes.size(); i++) {
-//            System.out.println((i + 1) + ". " +
-//                    dishes.get(i).toString() + " --> " +
-//                    dishes.get(i).getAverageFeedback() + "(" +
-//                    dishes.get(i).getFeedback().size() + ")");
-//        }
-//    }
 
     private void deletePlate() {
 

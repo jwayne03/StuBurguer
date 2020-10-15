@@ -53,18 +53,18 @@ public class Dish {
     }
 
     public static double getAverageFeedback(String nombre) throws IOException {
-            double total = 0;
-            int count=0;
-            for (Feedback feedback : Worker.feedbacks()) {
-                if (nombre.equalsIgnoreCase(feedback.getName())) {
-                    total += feedback.getGrade();
-                    count++;
-                }
+        double total = 0;
+        int count = 0;
+        for (Feedback feedback : Worker.feedbacks()) {
+            if (nombre.equalsIgnoreCase(feedback.getName())) {
+                total += feedback.getGrade();
+                count++;
             }
-            return total / count;
+        }
+        return total / count;
 
     }
-    
+
     @Override
     public String toString() {
         return getName() + "," + getType().toString() + "," + getPrice();
