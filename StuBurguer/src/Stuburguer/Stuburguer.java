@@ -64,6 +64,7 @@ public class Stuburguer {
                         break;
                     case 3:
                         consultPlates();
+//                        System.out.println(Dish.getAverageFeedback("BURGER"));
                         break;
                     case 4:
                         deletePlate();
@@ -125,13 +126,10 @@ public class Stuburguer {
         System.out.println("FEEDBACK CREATED!!");
     }
 
-    private void consultPlates() {
+    private void consultPlates() throws IOException {
         System.out.println("SHOWING DISHES......");
         for (int i = 0; i < dishes.size(); i++) {
-            System.out.println((i + 1)
-                    + ". " + dishes.get(i).toString() +
-                    " --> " + dishes.get(i).getAverageFeedback(dishes.get(i).getName()) +
-                    "(" + dishes.get(i).getFeedback().size() + ")");
+            System.out.println(dishes.get(i).toString() + " -----> " + Dish.getAverageFeedback(dishes.get(i).getName()));
         }
     }
 

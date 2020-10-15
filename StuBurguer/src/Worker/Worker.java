@@ -2,10 +2,10 @@ package Worker;
 
 import Model.Dish;
 import Enum.DishType;
+import Model.Feedback;
+import Persistence.FileManagement;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 
 public class Worker {
+
+    private static final String FILE_DISHES = "dishes";
+    private static final String FILE_FEEDBACK = "feedback";
 
     public static Dish getDishByName(ArrayList<Dish> dishes, String name) {
         for (int i = 0; i < dishes.size(); i++) {
@@ -188,5 +191,23 @@ public class Worker {
             }
         } while (type == null);
         return type;
+    }
+
+    public static ArrayList<Feedback> feedbacks() throws IOException {
+        File fileDish = new File(FileManagement.route() + FILE_FEEDBACK + ".txt");
+        FileReader frDish = new FileReader(fileDish);
+        BufferedReader br = new BufferedReader(frDish);
+
+        String line;
+        ArrayList<Feedback> feedback = new ArrayList<>();
+
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            String name = data[0];
+            double grade = Double.parseDouble(data[1]);
+            String comment = data[2];
+            feedback.add(new Feedback(name,grade,comment));
+        }
+        return feedback;
     }
 }

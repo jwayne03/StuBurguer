@@ -8,7 +8,6 @@ import Enum.DishType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FileManagement {
 
@@ -85,23 +84,9 @@ public class FileManagement {
 
             String line;
             if (fileDish.exists()) {
-//                 TODO: Do the part if the name of the dish exists don't append it.
-//                while ((line = br.readLine()) != null) {
-//                    if (line.isEmpty()) break;
-//                    if (line.split(":")[1].split("; ")[0].equals(name)) {
-//                        System.out.println("You can't create another plate, this plate already exists. Try again.");
-//                        break;
-//                    }
-//                }
-
                 for (Dish d : dish) {
                     bwDish.write(d.toString());
                     bwDish.newLine();
-//                        for (Feedback f : d.getFeedback()) {
-//                            bwFeedback.write(d.getName() + "," + f.toString());
-//                            bwDish.newLine();
-//
-//                    }
                 }
             }
             bwDish.close();
@@ -114,34 +99,12 @@ public class FileManagement {
     public static void saveDataFeedbacks(ArrayList<Feedback> feedbacks, ArrayList<Dish> dishes) {
         File fileFeedback = new File(route() + FILE_FEEDBACK + ".txt");
         try {
-//            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish, true));
-//            PrintWriter printWriter = new PrintWriter(fileDish);
-//            FileReader frDish = new FileReader(fileDish);
-//            BufferedReader br = new BufferedReader(frDish);
-
-
             BufferedWriter bwFeedback = new BufferedWriter(new FileWriter(fileFeedback, true));
-//            PrintWriter printWriter = new PrintWriter(fileFeedback);
-            FileReader frFeedback = new FileReader(fileFeedback);
-//            BufferedReader br = new BufferedReader(frFeedback);
 
             String line;
             if (fileFeedback.exists()) {
-                for (Feedback f : feedbacks) {
-                    bwFeedback.write(f.toString());
-                    bwFeedback.newLine();
-                }
-
-//                for (Dish d : dishes) {
-//                    bwDish.write(d.toString());
-//                    bwDish.newLine();
-//                    if (!d.getFeedback().isEmpty()) {
-//                        for (Feedback f : d.getFeedback()) {
-//                            bwFeedback.write(d.getName() + "," + f.toString());
-//                            bwDish.newLine();
-//                        }
-//                    }
-//                }
+                bwFeedback.write(feedbacks.get(feedbacks.size() - 1).toString());
+                bwFeedback.newLine();
             }
             bwFeedback.close();
         } catch (IOException | NumberFormatException e) {

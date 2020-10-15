@@ -1,8 +1,10 @@
 package Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Enum.DishType;
+import Worker.Worker;
 
 /**
  * @author John Wayne Carreon
@@ -50,21 +52,17 @@ public class Dish {
         this.type = type;
     }
 
-    public double getAverageFeedback(String nombre) {
-        if (!this.feedback.isEmpty()) {
+    public static double getAverageFeedback(String nombre) throws IOException {
             double total = 0;
             int count=0;
-            for (Feedback feedback : this.feedback) {
+            for (Feedback feedback : Worker.feedbacks()) {
                 if (nombre.equalsIgnoreCase(feedback.getName())) {
                     total += feedback.getGrade();
                     count++;
                 }
-
             }
             return total / count;
-        } else {
-            return 0;
-        }
+
     }
     
     @Override
