@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author John Wayne Carreon
@@ -99,42 +100,31 @@ public class Stuburguer {
         Double price = Worker.askDouble("PRICE: ");
         Dish d = new Dish(name, type, price);
         dishes.add(d);
-        FileManagement.saveData(dishes, name);
+        FileManagement.saveDataDishes(dishes, name);
         System.out.println("DISH CREATED!!");
     }
 
-    private void feedBack() {
-        showDishes();
-        String option = Worker.askString("DO YOU WANT TO YOUR FEEDBACK TO BE ANONYMOUS? (Y/N)", "Y", "N");
-        String name = "ANONYMOUS";
-        if (option.equalsIgnoreCase("N")) {
-            name = Worker.askString("NAME: ");
+    private void feedBack() throws IOException, NumberFormatException {
+//        showDishes();
+        int count = 1;
+
+        for (Dish dish : dishes) {
+            System.out.println(count + " - " + dish);
+            count++;
         }
+        System.out.println("What dish do you want to give feedback?");
+
+        int option = Integer.parseInt(read.readLine());
+
+        dishes.get(option - 1).getName();
+
+        // añadir feedback y escojer plato hacerlo con el array y sus posiciones
         double grade = Worker.askDouble("GRADE: ", 0, 10);
         String comment = Worker.askString("Comment the plate, it was good?");
-
-        //try {
-        //    fileWriter = new FileWriter("valoration.txt", true);
-        //    printWriter = new PrintWriter(fileWriter);
-//
-        //    System.out.println("Punctuation of the plate:");
-        //    double punctuation = Double.parseDouble(read.readLine());
-//
-        //    System.out.println("Comment the plate, it was good?");
-        //    String comment = read.readLine();
-//
-        //    printWriter.println("Punctuation: " + punctuation + " Comment: " + comment);
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //} finally {
-        //    try {
-        //        if (fileWriter != null) {
-        //            fileWriter.close();
-        //        }
-        //    } catch (IOException e) {
-        //        e.printStackTrace();
-        //    }
-        //}
+        Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
+        feedbacks.add(feedback);
+        FileManagement.saveDataFeedbacks(feedbacks, dishes);
+        System.out.println("FEEDBACK CREATED!!");
     }
 
     private void consultPlates() {
@@ -150,7 +140,10 @@ public class Stuburguer {
     private void showDishes() {
         System.out.println("SHOWING DISHES......");
         for (int i = 0; i < dishes.size(); i++) {
-            System.out.println((i + 1) + ". " + dishes.get(i).toString() + " --> " + dishes.get(i).getAverageFeedback() + "(" + dishes.get(i).getFeedback().size() + ")");
+            System.out.println((i + 1) + ". " +
+                    dishes.get(i).toString() + " --> " +
+                    dishes.get(i).getAverageFeedback() + "(" +
+                    dishes.get(i).getFeedback().size() + ")");
         }
     }
 
@@ -184,5 +177,4 @@ public class Stuburguer {
                 + "6 - Show all data\n"
                 + "7 - Exit\n");
     }
-
 }

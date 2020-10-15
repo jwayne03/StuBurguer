@@ -1,20 +1,18 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import Enum.DishType;
 
 /**
- *
  * @author John Wayne Carreon
  */
 
 public class Dish {
 
     private String name;
-    private DishType type;
     private Double price;
+    private DishType type;
     private ArrayList<Feedback> feedback;
 
     public Dish(String name, DishType type, Double price) {
@@ -63,8 +61,7 @@ public class Dish {
             return 0;
         }
     }
-
-
+    
     @Override
     public String toString() {
         return getName() + "," + getType().toString() + "," + getPrice();

@@ -12,7 +12,8 @@ public class Feedback {
     private double grade;
     private String comment;
 
-    public Feedback(String name, double grade, String comment) {
+    public Feedback(String name,double grade, String comment) {
+        this.name = name;
         this.grade = grade;
         this.comment = comment;
     }
@@ -50,8 +51,6 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return "Feedback: " +
-                " Punctuation: " + grade +
-                " Comment: " + comment;
+        return getName() + "," + getGrade() + "," + getComment();
     }
 }
