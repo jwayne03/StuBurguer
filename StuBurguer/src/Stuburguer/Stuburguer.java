@@ -8,7 +8,6 @@ import Worker.Worker;
 import Enum.DishType;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 
 public class Stuburguer {
 
-    private final File file = new File("plate.txt");
     private FileWriter fileWriter;
     private FileReader fileReader;
     private PrintWriter printWriter;
@@ -94,6 +92,14 @@ public class Stuburguer {
     private void registerPlate() {
         System.out.println("CREATING DISH......");
         String name = Worker.askStringToUpperCase("NAME: ");
+
+        for (Dish dish : dishes) {
+            if (name.equalsIgnoreCase(dish.getName())) {
+                System.out.println("This dish already exist, try again.");
+                return;
+            }
+        }
+
         DishType type = Worker.askEnumDishType("TYPE (STARTER(1), MAIN(2), DESSERT(3)): ");
         Double price = Worker.askDouble("PRICE: ");
         Dish d = new Dish(name, type, price);
@@ -109,12 +115,10 @@ public class Stuburguer {
             System.out.println(count + " - " + dish);
             count++;
         }
+
         System.out.println("What dish do you want to give feedback?");
-
         int option = Integer.parseInt(read.readLine());
-
         dishes.get(option - 1).getName();
-
         double grade = Worker.askDouble("GRADE: ", 0, 10);
         String comment = Worker.askString("Comment the plate, it was good?");
         Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
@@ -123,15 +127,50 @@ public class Stuburguer {
         System.out.println("FEEDBACK CREATED!!");
     }
 
-    private void consultPlates() throws IOException {
-        System.out.println("SHOWING DISHES......");
-        for (int i = 0; i < dishes.size(); i++) {
-            System.out.println(dishes.get(i).toString() + " -----> " + Dish.getAverageFeedback(dishes.get(i).getName()));
+    private void consultPlates() {
+        try {
+            System.out.println("SHOWING DISHES......");
+            for (int i = 0; i < dishes.size(); i++) {
+                System.out.println(dishes.get(i).toString() + " -----> "
+                        + Dish.getAverageFeedback(dishes.get(i).getName()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    private void deletePlate() throws IOException {
+        System.out.println("What plate do you want to delete?");
+        int count = 1;
 
-    private void deletePlate() {
+        for (Dish dish : dishes) {
+            System.out.println(count + " - " + dish);
+            count++;
+        }
+
+        System.out.println("What dish do you want to remove?");
+        int option = Integer.parseInt(read.readLine());
+        String nameOfDish = dishes.get(option - 1).getName();
+
+        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) {
+            dishes.remove(option);
+        }
+
+        FileManagement.deleteDataDish(dishes);
+
+//        for (Dish dish : dishes) {
+//            System.out.println(count + " - " + dish);
+//            count++;
+//        }
+//
+//        System.out.println("What dish do you want to give feedback?");
+//        int option = Integer.parseInt(read.readLine());
+//        dishes.get(option - 1).getName();
+//        double grade = Worker.askDouble("GRADE: ", 0, 10);
+//        String comment = Worker.askString("Comment the plate, it was good?");
+//        Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
+//        feedbacks.add(feedback);
+//        FileManagement.saveDataFeedbacks(feedbacks, dishes);
 
     }
 

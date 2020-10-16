@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- *
  * @author John Wayne Carreon
  */
 
@@ -50,7 +49,7 @@ public class Worker {
                 System.out.println(message);
                 answer = read.readLine().toLowerCase();
                 if (answer.equals("")) System.out.println("You must write something");
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -66,7 +65,7 @@ public class Worker {
                 System.out.println(message);
                 answer = read.readLine().toUpperCase();
                 if (answer.equals("")) System.out.println("You must write something");
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -206,7 +205,7 @@ public class Worker {
             String name = data[0];
             double grade = Double.parseDouble(data[1]);
             String comment = data[2];
-            feedback.add(new Feedback(name,grade,comment));
+            feedback.add(new Feedback(name, grade, comment));
         }
         return feedback;
     }

@@ -19,7 +19,6 @@ public class FileManagement {
     public static String route() {
         String route = System.getProperty("user.dir") + SEPARATOR + FOLDER_DATA;
         File folder = new File(route);
-
         if (!folder.exists()) folder.mkdir();
         return route + SEPARATOR;
     }
@@ -86,7 +85,6 @@ public class FileManagement {
                 }
             }
             bwDish.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,6 +101,23 @@ public class FileManagement {
             }
             bwFeedback.close();
         } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteDataDish(ArrayList<Dish> dishes) {
+        File fileDish = new File(route() + FILE_DISHES + ".txt");
+        try {
+            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish));
+
+            if (fileDish.exists()) {
+                for (Dish d : dishes) {
+                    bwDish.write(d.toString());
+                    bwDish.newLine();
+                }
+            }
+            bwDish.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
