@@ -152,11 +152,9 @@ public class Stuburguer {
         int option = Integer.parseInt(read.readLine());
         String nameOfDish = dishes.get(option - 1).getName();
 
-        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) {
-            dishes.remove(option);
-        }
+        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) dishes.remove(option);
 
-        FileManagement.deleteDataDish(dishes);
+        FileManagement.deleteDataDish(dishes, dish.getName());
 
 //        for (Dish dish : dishes) {
 //            System.out.println(count + " - " + dish);
@@ -171,7 +169,6 @@ public class Stuburguer {
 //        Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
 //        feedbacks.add(feedback);
 //        FileManagement.saveDataFeedbacks(feedbacks, dishes);
-
     }
 
     private void modifyPlate() {
