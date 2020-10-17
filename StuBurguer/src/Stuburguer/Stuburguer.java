@@ -130,10 +130,13 @@ public class Stuburguer {
     private void consultPlates() {
         try {
             System.out.println("SHOWING DISHES......");
+            int count = 1;
             for (int i = 0; i < dishes.size(); i++) {
-                System.out.println(dishes.get(i).toString() + " -----> "
-                        + Dish.getAverageFeedback(dishes.get(i).getName()));
+                System.out.println(count + " - " + dishes.get(i).toString()
+                        + " -----> " + Dish.getAverageFeedback(dishes.get(i).getName()));
+                count++;
             }
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,25 +153,10 @@ public class Stuburguer {
 
         System.out.println("What dish do you want to remove?");
         int option = Integer.parseInt(read.readLine());
-        String nameOfDish = dishes.get(option - 1).getName();
-
-        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) dishes.remove(option);
-
-        FileManagement.deleteDataDish(dishes, dish.getName());
-
-//        for (Dish dish : dishes) {
-//            System.out.println(count + " - " + dish);
-//            count++;
-//        }
-//
-//        System.out.println("What dish do you want to give feedback?");
-//        int option = Integer.parseInt(read.readLine());
-//        dishes.get(option - 1).getName();
-//        double grade = Worker.askDouble("GRADE: ", 0, 10);
-//        String comment = Worker.askString("Comment the plate, it was good?");
-//        Feedback feedback = new Feedback(dishes.get(option - 1).getName(), grade, comment);
-//        feedbacks.add(feedback);
-//        FileManagement.saveDataFeedbacks(feedbacks, dishes);
+        String nameOfDish = dishes.get(option).getName();
+        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) dishes.remove(option - 1);
+        FileManagement.deleteDataDish(dishes);
+        System.out.println("YOU HAVE DELETED A DISH SUCCESSFULLY");
     }
 
     private void modifyPlate() {
@@ -177,10 +165,9 @@ public class Stuburguer {
 
     private void showAllData() {
         System.out.println("SHOWING ALL DATA......");
-        for (int i = 0; i < dishes.size(); i++) {
-            System.out.println(dishes.toString());
-            System.out.println((i + 1) + ". " + dishes.get(i).toString());
-            for (Feedback feedback : dishes.get(i).getFeedback()) {
+        for (Dish value : dishes) {
+            System.out.println(value.toString());
+            for (Feedback feedback : value.getFeedback()) {
                 System.out.println("\t" + feedback.toString());
             }
         }
@@ -195,6 +182,6 @@ public class Stuburguer {
                 + "4 - Delete a plate\n"
                 + "5 - Modify the plate\n"
                 + "6 - Show all data\n"
-                + "7 - Exit\n");
+                + "7 - Exit");
     }
 }

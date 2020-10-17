@@ -105,27 +105,8 @@ public class FileManagement {
         }
     }
 
-//    public static void deleteDataDish(ArrayList<Dish> dishes) {
-//        File fileDish = new File(route() + FILE_DISHES + ".txt");
-//        try {
-//            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish));
-//
-//            if (fileDish.exists()) {
-//                for (Dish d : dishes) {
-//                    bwDish.write(d.toString());
-//                    bwDish.newLine();
-//                }
-//            }
-//            bwDish.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public static void deleteDataDish(ArrayList<Dish> dishes, String name) {
+    public static void deleteDataDish(ArrayList<Dish> dishes) {
         File fileDish = new File(route() + FILE_DISHES + ".txt");
-
-
         try {
             BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish));
 
@@ -139,6 +120,5 @@ public class FileManagement {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
