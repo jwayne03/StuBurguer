@@ -7,12 +7,7 @@ import Worker.Worker;
 
 import Enum.DishType;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -159,8 +154,30 @@ public class Stuburguer {
         System.out.println("YOU HAVE DELETED A DISH SUCCESSFULLY");
     }
 
-    private void modifyPlate() {
+    private void modifyPlate() throws IOException {
+        System.out.println("What dish do you want to modify?");
+        int count = 1;
 
+        for (Dish dish : dishes) {
+            System.out.println(count + " - " + dish);
+            count++;
+        }
+
+        System.out.println("What dish do you want to modify the price?");
+        int option = Integer.parseInt(read.readLine());
+        String nameOfDish = dishes.get(option - 1).getName();
+        // TODO: Arreglar la parte de modificar
+//        if (nameOfDish.equalsIgnoreCase(dishes.get(option - 1).getName())) {
+//            System.out.println("You have chosen: " + dishes.get(option - 1).getName());
+//            System.out.println("Choose the price of the dish: ");
+//            double newPrice = Double.parseDouble(read.readLine());
+//            dishes.add(dishes.get(option - 1).getName(), dish.getType(), newPrice);
+//            dishes.get(option - 1).getName()
+//        }
+
+        FileManagement.modifyPriceDish(dishes);
+//        FileManagement.deleteDataDish(dishes);
+        System.out.println("YOU HAVE MODIFIED A DISH SUCCESSFULLY");
     }
 
     private void showAllData() {

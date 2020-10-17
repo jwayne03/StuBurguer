@@ -121,4 +121,21 @@ public class FileManagement {
             e.printStackTrace();
         }
     }
+
+    public static void modifyPriceDish(ArrayList<Dish> dishes) {
+        File fileDish = new File(route() + FILE_DISHES + ".txt");
+        try {
+            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish));
+
+            if (fileDish.exists()) {
+                for (Dish d : dishes) {
+                    bwDish.write(d.toString());
+                    bwDish.newLine();
+                }
+                bwDish.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
