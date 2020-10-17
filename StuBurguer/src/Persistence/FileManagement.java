@@ -9,6 +9,9 @@ import Enum.DishType;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * @author John Wayne Carreon
+ */
 public class FileManagement {
 
     private static final String SEPARATOR = File.separator;
