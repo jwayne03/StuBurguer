@@ -39,12 +39,18 @@ public class Stuburguer {
     private void mainMenu() {
         try {
             boolean exit = false;
+
             while (!exit) {
                 showMenu();
                 int option;
                 do {
+                    System.out.print("\nIntroduce an option:");
                     option = Integer.parseInt(read.readLine());
-                } while (option < 0 && option > 8);
+
+                    if (option > 0 || option < 8) {
+                        System.out.println("You need to introduce a number from 1 to 7");
+                    }
+                } while (option < 0 || option > 8);
 
                 switch (option) {
                     case 1:
@@ -140,6 +146,7 @@ public class Stuburguer {
     private void deletePlate() throws IOException {
         System.out.println("What plate do you want to delete?");
         int count = 1;
+        int countBefore = 1;
 
         for (Dish dish : dishes) {
             System.out.println(count + " - " + dish);
@@ -148,10 +155,17 @@ public class Stuburguer {
 
         System.out.println("What dish do you want to remove?");
         int option = Integer.parseInt(read.readLine());
-        String nameOfDish = dishes.get(option).getName();
-        if (nameOfDish.equalsIgnoreCase(dishes.get(option).getName())) dishes.remove(option - 1);
+        String nameOfDish = dishes.get(option - 1).getName();
+        if (nameOfDish.equalsIgnoreCase(dishes.get(option - 1).getName())) {
+            dishes.remove(option - 1);
+        }
         FileManagement.deleteDataDish(dishes);
         System.out.println("YOU HAVE DELETED A DISH SUCCESSFULLY");
+
+        for (Dish dish : dishes) {
+            System.out.println(countBefore + " - " + dish);
+            countBefore++;
+        }
     }
 
     private void modifyPlate() throws IOException {
@@ -172,8 +186,7 @@ public class Stuburguer {
             System.out.println("Choose the price of the dish: ");
 
             double newPrice = Double.parseDouble(read.readLine());
-            Dish dish = new Dish(dishes.get(option - 1).getName(),
-                    dishes.get(option - 1).getType(), newPrice);
+            Dish dish = new Dish(dishes.get(option - 1).getName(), dishes.get(option - 1).getType(), newPrice);
 
             dishes.add(dish);
             dishes.remove(option - 1);
