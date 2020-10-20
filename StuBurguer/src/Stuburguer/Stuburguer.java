@@ -38,7 +38,6 @@ public class Stuburguer {
 
     private void mainMenu() {
         try {
-
             boolean exit = false;
 
             while (!exit) {
