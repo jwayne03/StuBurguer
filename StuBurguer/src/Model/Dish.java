@@ -62,7 +62,6 @@ public class Dish {
             }
         }
         return total / count;
-
     }
 
     @Override

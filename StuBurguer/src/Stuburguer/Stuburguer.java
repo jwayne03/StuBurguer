@@ -7,7 +7,12 @@ import Worker.Worker;
 
 import Enum.DishType;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -26,12 +31,18 @@ public class Stuburguer {
     private ArrayList<Dish> dishes;
     private ArrayList<Feedback> feedbacks;
 
-    public void run() {
+    private void init() {
         read = new BufferedReader(new InputStreamReader(System.in));
         feedback = new Feedback(feedback);
         fileWriter = null;
         fileReader = null;
         printWriter = null;
+        dishes = new ArrayList<>();
+        feedbacks = new ArrayList<>();
+        FileManagement.getDefaultInfo(dishes);
+    }
+
+    public void run() {
         init();
         mainMenu();
     }
@@ -84,12 +95,6 @@ public class Stuburguer {
         }
     }
 
-    private void init() {
-        dishes = new ArrayList<>();
-        feedbacks = new ArrayList<>();
-        FileManagement.getDefaultInfo(dishes);
-    }
-
     private void registerPlate() {
         System.out.println("CREATING DISH......");
         String name = Worker.askStringToUpperCase("NAME: ");
@@ -105,11 +110,11 @@ public class Stuburguer {
         Double price = Worker.askDouble("PRICE: ");
         Dish d = new Dish(name, type, price);
         dishes.add(d);
-        FileManagement.saveDataDishes(dishes, name);
+        FileManagement.saveDataDishes(dishes);
         System.out.println("DISH CREATED!!");
     }
 
-    private void feedBack() throws IOException, NumberFormatException {
+    private void feedBack() throws NumberFormatException {
         int count = 1;
 
         for (Dish dish : dishes) {
@@ -117,8 +122,7 @@ public class Stuburguer {
             count++;
         }
 
-        System.out.println("What dish do you want to give feedback?");
-        int option = Integer.parseInt(read.readLine());
+        int option = Worker.askInt("What dish do you want to give feedback?");
         dishes.get(option - 1).getName();
         double grade = Worker.askDouble("GRADE: ", 0, 10);
         String comment = Worker.askString("Comment the plate, it was good?");
@@ -153,8 +157,7 @@ public class Stuburguer {
             count++;
         }
 
-        System.out.println("What dish do you want to remove?");
-        int option = Integer.parseInt(read.readLine());
+        int option = Worker.askInt("What dish do you want to remove?");
         String nameOfDish = dishes.get(option - 1).getName();
         if (nameOfDish.equalsIgnoreCase(dishes.get(option - 1).getName())) {
             dishes.remove(option - 1);
@@ -168,7 +171,7 @@ public class Stuburguer {
         }
     }
 
-    private void modifyPlate() throws IOException {
+    private void modifyPlate() {
         System.out.println("What dish do you want to modify?");
         int count = 1;
 
@@ -177,15 +180,13 @@ public class Stuburguer {
             count++;
         }
 
-        System.out.println("What dish do you want to modify the price?");
-        int option = Integer.parseInt(read.readLine());
+        int option = Worker.askInt("What dish do you want to modify the price?");
         String nameOfDish = dishes.get(option - 1).getName();
 
         if (nameOfDish.equalsIgnoreCase(dishes.get(option - 1).getName())) {
             System.out.println("You have chosen: " + dishes.get(option - 1).getName());
-            System.out.println("Choose the price of the dish: ");
 
-            double newPrice = Double.parseDouble(read.readLine());
+            double newPrice = Worker.askDouble("Choose the price of the dish: ");
             Dish dish = new Dish(dishes.get(option - 1).getName(), dishes.get(option - 1).getType(), newPrice);
 
             dishes.add(dish);

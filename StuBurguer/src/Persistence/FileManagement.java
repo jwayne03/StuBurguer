@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * @author John Wayne Carreon
  */
+
 public class FileManagement {
 
     private static final String SEPARATOR = File.separator;
@@ -75,11 +76,11 @@ public class FileManagement {
         }
     }
 
-    public static void saveDataDishes(ArrayList<Dish> dish, String name) {
+    public static void saveDataDishes(ArrayList<Dish> dish) {
         File fileDish = new File(route() + FILE_DISHES + ".txt");
 
         try {
-            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish, true));
+            BufferedWriter bwDish = new BufferedWriter(new FileWriter(fileDish));
 
             if (fileDish.exists()) {
                 for (Dish d : dish) {
